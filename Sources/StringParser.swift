@@ -41,7 +41,8 @@ public func zeroOrMore <T> (_ p: Parser<T,Character>) -> Parser<T,String> {
 
 /** Repeat character parser 'n' times and return as string. If 'n' == 0 it always succeeds and returns "". */
 public func count <T> (_ n: Int, _ p: Parser<T,Character>) -> Parser<T,String> {
-    return n == 0 ? pure("") : extend <^> p <*> count(n-1, p)
+    let _extend: (Character) -> ([Character]) -> String = extend
+    return n == 0 ? pure("") : _extend <^> p <*> count(n-1, p)
 }
 
 /**
